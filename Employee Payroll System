@@ -1,0 +1,103 @@
+import java.util.ArrayList;
+abstract class Employee{
+private int id;
+private String name;
+
+public Employee( String name , int id){
+this.name= name;
+this.id= id;
+}
+public String getName(){
+ return name;
+}
+
+public int getId(){
+ return id;
+}
+
+abstract double calculateSalary();
+
+@Override
+public String  ToString(){
+ return "Employee[name= "+name+" , id= "+id+" , salary= "+calculateSalary()+"]";
+}
+
+}
+
+
+ // creating full time Employee Class 
+ class fulltimeEmployee extends Employee{
+
+ private double monthlySalary;
+
+ public fulltimeEmployee(String name ,int id , double monthlySalary){
+    super(name, id);
+    this.monthlySalary=monthlySalary;
+ }
+ @Override
+ public double calculateSalary(){
+    return monthlySalary;
+ }
+}
+
+// creating class parttime Employee
+   class partTimeEmployee extends Employee{
+    private int hoursWorked;
+    private double hoursRate;
+
+    public partTimeEmployee(String name , int id , int hoursWorked , double hoursRate){
+        super(name, id);
+        this.hoursRate=hoursRate;
+        this.hoursWorked=hoursWorked;
+    }
+    public double calculateSalary(){
+        return hoursRate*hoursWorked;
+    }
+  }
+
+  // creating the class payroll System 
+
+  class payrollSystem {
+ ArrayList<Employee> emplist = new ArrayList<>();
+ public payrollSystem(){
+    emplist= new ArrayList<>();
+ }
+
+ public void addEmployee( Employee emp){
+  emplist.add(emp);
+ }
+ // removing the employee 
+ public void removeEmployee(int id ){
+  Employee empRemove= null;
+  for(Employee emp : emplist){
+    if(emp.getId()== id){
+      empRemove= emp;
+      break;
+    }
+    if(empRemove!=null){
+      emplist.remove(empRemove);
+    }
+  }
+
+}
+
+// displaye Employee 
+public void displayEmployee(){
+  for (Employee emp : emplist){
+    System.out.println(emp);
+  }
+ }
+  }
+
+public class Main {
+    public static void main(String[] args) {
+        payrollSystem prs= new payrollSystem();
+        fulltimeEmployee fte1 = new fulltimeEmployee("Dhruv Singhal", 1, 200000);
+        partTimeEmployee pte1= new partTimeEmployee("Sahmi", 2, 3, 1000);
+        prs.addEmployee(fte1);
+        prs.addEmployee(pte1);
+        pte1.calculateSalary();
+        prs.displayEmployee();
+    }
+    
+}
